@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Expense{% endblock %}
+
+{% block page_title %}Edit Expense{% endblock %}
+
+{% block content %}
+
+<div class="card shadow border-0">
+
+<div class="card-body">
+
+<form method="POST">
+
+<label>Amount</label>
+
+<input
+type="number"
+class="form-control"
+name="amount"
+value="{{ expense[1] }}"
+required>
+
+<br>
+
+<label>Category</label>
+
+<input
+type="text"
+class="form-control"
+name="category"
+value="{{ expense[2] }}"
+required>
+
+<br>
+
+<label>Payment Mode</label>
+
+<input
+type="text"
+class="form-control"
+name="payment_mode"
+value="{{ expense[3] }}"
+required>
+
+<br>
+
+<label>Description</label>
+
+<textarea
+class="form-control"
+name="description">{{ expense[4] }}</textarea>
+
+<br>
+
+<label>Date</label>
+
+<input
+type="date"
+class="form-control"
+name="expense_date"
+value="{{ expense[5] }}"
+required>
+
+<br>
+
+<button class="btn btn-success">
+
+Update Expense
+
+</button>
+
+<a
+href="/expenses"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

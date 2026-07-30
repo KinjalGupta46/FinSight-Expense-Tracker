@@ -1,0 +1,423 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block page_title %}Financial Analytics{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+
+    <h2 class="page-title">Financial Analytics Dashboard</h2>
+
+    <p class="page-subtitle">
+        Monitor your financial performance with detailed insights.
+    </p>
+
+</div>
+
+{% for alert in alerts %}
+
+<div class="alert alert-{{ alert.type }} d-flex align-items-center mb-3">
+
+    <i class="bi {{ alert.icon }} me-2"></i>
+
+    {{ alert.message }}
+
+</div>
+
+{% endfor %}
+
+<div class="row g-4 mb-4">
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="summary-card income-card">
+
+            <div class="card-info">
+
+                <span>Total Income</span>
+
+                <h3>₹{{ "{:,.0f}".format(income|default(0)) }}</h3>
+
+                <small>This Month</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-cash-stack"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="summary-card expense-card">
+
+            <div class="card-info">
+
+                <span>Total Expenses</span>
+
+                <h3>₹{{ "{:,.0f}".format(expense|default(0)) }}</h3>
+
+                <small>This Month</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-wallet2"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="summary-card saving-card">
+
+            <div class="card-info">
+
+                <span>Total Savings</span>
+
+                <h3>₹{{ "{:,.0f}".format(savings|default(0)) }}</h3>
+
+                <small>Available</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-piggy-bank"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="summary-card budget-card">
+
+            <div class="card-info">
+
+                <span>Budget Used</span>
+
+                <h3>{{ budget|default(0) }}%</h3>
+
+                <small>Current Month</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-pie-chart-fill"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row g-4 mb-4">
+
+    <div class="col-lg-6">
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+
+                <h5>Expense Distribution</h5>
+
+            </div>
+
+            <div class="chart-body">
+
+                <canvas id="expenseChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+
+                <h5>Cash Flow Analysis</h5>
+
+            </div>
+
+            <div class="chart-body">
+
+                <canvas id="cashFlowChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row g-4 mb-4">
+
+    <div class="col-lg-8">
+
+        <div class="table-card">
+
+            <div class="table-header">
+
+                <h5>AI Financial Insights</h5>
+
+            </div>
+
+            <div class="p-4">
+
+                <div class="alert alert-success">
+
+    <i class="bi bi-graph-up-arrow me-2"></i>
+
+    Highest spending category:
+    <strong>{{ highest_category }}</strong>
+    (₹{{ "{:,.0f}".format(highest_amount) }})
+
+</div>
+
+               {% for suggestion in recommendations %}
+
+<div class="alert alert-info mb-3">
+
+    <i class="bi bi-lightbulb-fill me-2"></i>
+
+    {{ suggestion }}
+
+</div>
+
+{% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="table-card">
+
+            <div class="table-header">
+
+                <h5>Financial Health</h5>
+
+            </div>
+
+            <div class="text-center p-4">
+
+                <div class="display-2 text-primary fw-bold">
+
+    {{ health_score }}%
+
+</div>
+
+<p class="text-muted mt-2">
+
+    {{ health_status }} Financial Score
+
+</p>
+
+<div class="progress mt-4" style="height:12px;">
+
+    <div class="progress-bar
+        {% if health_score >= 90 %}
+            bg-success
+        {% elif health_score >= 75 %}
+            bg-primary
+        {% elif health_score >= 60 %}
+            bg-warning
+        {% else %}
+            bg-danger
+        {% endif %}"
+
+        style="width:{{ health_score }}%">
+
+    </div>
+
+</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row g-4">
+
+    <div class="col-lg-8">
+
+        <div class="table-card">
+
+            <div class="table-header">
+
+                <h5>Budget Recommendations</h5>
+
+            </div>
+
+            <table class="table align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Suggestion</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Food & Dining</td>
+
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                High
+                            </span>
+                        </td>
+
+                        <td>Reduce outside food by 15%</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Shopping</td>
+
+                        <td>
+                            <span class="badge bg-success">
+                                Good
+                            </span>
+                        </td>
+
+                        <td>Keep spending consistent</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Transport</td>
+
+                        <td>
+                            <span class="badge bg-primary">
+                                Normal
+                            </span>
+                        </td>
+
+                        <td>No changes required</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Entertainment</td>
+
+                        <td>
+                            <span class="badge bg-danger">
+                                Over Budget
+                            </span>
+                        </td>
+
+                        <td>Limit weekend expenses</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="table-card">
+
+            <div class="table-header">
+
+                <h5>Quick Stats</h5>
+
+            </div>
+
+            <div class="p-4">
+
+                <div class="d-flex justify-content-between mb-3">
+
+                    <span>Saving Rate</span>
+
+                    <strong class="text-success">32%</strong>
+
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+
+                    <span>Expense Ratio</span>
+
+                    <strong class="text-danger">68%</strong>
+
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+
+                    <span>Investment Score</span>
+
+                    <strong class="text-primary">8.8 / 10</strong>
+
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+
+                    <span>Emergency Fund</span>
+
+                    <strong class="text-success">Healthy</strong>
+
+                </div>
+
+                <hr>
+
+                <button class="btn btn-primary w-100">
+
+                    <i class="bi bi-download me-2"></i>
+
+                    Download Report
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+
+{% endblock %}

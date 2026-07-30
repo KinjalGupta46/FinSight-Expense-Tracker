@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}Investments{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Investments</h2>
+
+        <a href="/add-investment" class="btn btn-primary">
+            + Add Investment
+        </a>
+    </div>
+
+    <!-- Portfolio Summary Cards -->
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Total Investment</h6>
+                    <h4>₹{{ "%.2f"|format(total_investment) }}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Current Value</h6>
+                    <h4>₹{{ "%.2f"|format(current_value) }}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Profit / Loss</h6>
+
+                    {% if profit_loss >= 0 %}
+                        <h4 class="text-success">
+                            ₹{{ "%.2f"|format(profit_loss) }}
+                        </h4>
+                    {% else %}
+                        <h4 class="text-danger">
+                            ₹{{ "%.2f"|format(profit_loss) }}
+                        </h4>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Overall Return</h6>
+                    <h4>{{ overall_return }}%</h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-4">
+
+    <div class="card-header">
+        <h5>Asset Allocation</h5>
+    </div>
+
+    <div class="card-body">
+
+       <canvas id="allocationChart" height="280"></canvas>
+
+    </div>
+
+</div>
+
+    <!-- Investments Table -->
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Qty</th>
+                        <th>Purchase Price</th>
+                        <th>Current Price</th>
+                        <th>Invested</th>
+                        <th>Current Value</th>
+                        <th>Profit / Loss</th>
+                        <th>Return %</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for investment in investments %}
+
+                <tr>
+
+                    <td>{{ investment[1] }}</td>
+                    <td>{{ investment[2] }}</td>
+                    <td>{{ investment[3] }}</td>
+
+                    <td>₹{{ investment[4] }}</td>
+
+                    <td>₹{{ investment[5] }}</td>
+
+                    <td>₹{{ "%.2f"|format(investment[7]) }}</td>
+
+                    <td>₹{{ "%.2f"|format(investment[8]) }}</td>
+
+                    <td>
+                        {% if investment[9] >= 0 %}
+                            <span class="text-success fw-bold">
+                                ₹{{ "%.2f"|format(investment[9]) }}
+                            </span>
+                        {% else %}
+                            <span class="text-danger fw-bold">
+                                ₹{{ "%.2f"|format(investment[9]) }}
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ "%.2f"|format(investment[10]) }}%</td>
+
+                    <td>{{ investment[6] }}</td>
+
+                    <td>
+                        <a href="/edit-investment/{{ investment[0] }}"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a href="/delete-investment/{{ investment[0] }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this investment?')">
+                            Delete
+                        </a>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                {% if investments|length == 0 %}
+                <tr>
+                    <td colspan="11" class="text-center text-muted">
+                        No investments found.
+                    </td>
+                </tr>
+                {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('allocationChart');
+
+new Chart(ctx, {
+    type: 'pie',
+
+    data: {
+        labels: {{ chart_labels|tojson }},
+
+        datasets: [{
+            data: {{ chart_values|tojson }},
+
+            backgroundColor: [
+                '#4F46E5',
+                '#10B981',
+                '#F59E0B',
+                '#EF4444',
+                '#06B6D4',
+                '#8B5CF6'
+            ],
+
+            borderColor: "#ffffff",
+            borderWidth: 2
+        }]
+    },
+
+   options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 2,
+
+    plugins: {
+        legend: {
+            position: "bottom"
+        },
+        title: {
+            display: true,
+            text: "Investment Distribution"
+        }
+    }
+}
+});
+</script>
+
+{% endblock %}

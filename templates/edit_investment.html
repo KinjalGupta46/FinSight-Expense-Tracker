@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Investment{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-warning">
+<h3>Edit Investment</h3>
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+<label>Investment Name</label>
+<input type="text"
+name="investment_name"
+class="form-control"
+value="{{ investment[0] }}"
+required>
+</div>
+
+<div class="mb-3">
+<label>Investment Type</label>
+
+<select
+name="investment_type"
+class="form-select">
+
+<option {% if investment[1]=='Stock' %}selected{% endif %}>Stock</option>
+<option {% if investment[1]=='Mutual Fund' %}selected{% endif %}>Mutual Fund</option>
+<option {% if investment[1]=='ETF' %}selected{% endif %}>ETF</option>
+<option {% if investment[1]=='Bond' %}selected{% endif %}>Bond</option>
+<option {% if investment[1]=='Gold' %}selected{% endif %}>Gold</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+<label>Quantity</label>
+
+<input
+type="number"
+name="quantity"
+class="form-control"
+value="{{ investment[2] }}"
+required>
+
+</div>
+
+<div class="mb-3">
+<label>Purchase Price</label>
+
+<input
+type="number"
+step="0.01"
+name="purchase_price"
+class="form-control"
+value="{{ investment[3] }}"
+required>
+
+</div>
+
+<div class="mb-3">
+<label>Current Price</label>
+
+<input
+type="number"
+step="0.01"
+name="current_price"
+class="form-control"
+value="{{ investment[4] }}"
+required>
+
+</div>
+
+<div class="mb-3">
+<label>Purchase Date</label>
+
+<input
+type="date"
+name="purchase_date"
+class="form-control"
+value="{{ investment[5] }}"
+required>
+
+</div>
+
+<button class="btn btn-success">
+Update Investment
+</button>
+
+<a href="/investments" class="btn btn-secondary">
+Cancel
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

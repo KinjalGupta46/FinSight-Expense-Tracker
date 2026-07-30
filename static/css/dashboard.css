@@ -1,0 +1,521 @@
+/* ===========================
+GOOGLE FONT
+=========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f6f8fc;
+    color:#2b2b2b;
+}
+
+/* ===========================
+SIDEBAR
+=========================== */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:220px;
+    height:100vh;
+    background:#fff;
+    border-right:1px solid #ececec;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#2563eb;
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:28px;
+}
+
+.logo i{
+    font-size:28px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 16px;
+    text-decoration:none;
+    color:#555;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:500;
+    transition:.25s;
+}
+
+.menu a:hover{
+    background:#edf4ff;
+    color:#2563eb;
+}
+
+.menu a.active{
+    background:#2563eb;
+    color:#fff;
+}
+
+.menu i{
+    font-size:18px;
+}
+
+/* ===========================
+MONTH OVERVIEW
+=========================== */
+
+.overview-card{
+    background:#2563eb;
+    color:#fff;
+    border-radius:16px;
+    padding:18px;
+    margin-top:25px;
+}
+
+.overview-card small{
+    opacity:.85;
+    font-size:12px;
+}
+
+.overview-card h3{
+    font-size:22px;
+    font-weight:700;
+    margin:10px 0;
+}
+
+.overview-card p{
+    font-size:13px;
+    opacity:.9;
+}
+
+.overview-card .btn{
+    border:none;
+    border-radius:10px;
+    background:#fff;
+    color:#2563eb;
+    font-weight:600;
+}
+
+/* ===========================
+LOGOUT
+=========================== */
+
+.logout{
+    margin-top:20px;
+}
+
+.logout a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:#ef4444;
+    font-weight:600;
+}
+
+/* ===========================
+MAIN
+=========================== */
+
+.main{
+    margin-left:220px;
+    min-height:100vh;
+}
+
+/* ===========================
+TOPBAR
+=========================== */
+
+.topbar{
+    height:60px;
+    background:#fff;
+    border-bottom:1px solid #ececec;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 28px;
+}
+
+.topbar h4{
+    font-size:18px;
+    font-weight:600;
+    margin:0;
+}
+
+.right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.notification{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#f3f4f6;
+}
+
+.notification i{
+    font-size:18px;
+}
+
+/* ===========================
+CONTENT
+=========================== */
+
+.content{
+    padding:26px;
+}
+
+/* ===========================
+PAGE HEADER
+=========================== */
+
+.page-title{
+    font-size:20px;
+    font-weight:600;
+    color:#1f2937;
+    margin-bottom:4px;
+}
+
+.page-subtitle{
+    font-size:13px;
+    color:#8b8b8b;
+}
+
+/* ===========================
+SUMMARY CARDS
+=========================== */
+
+.summary-card{
+    background:#fff;
+    border-radius:16px;
+    height:95px;
+    padding:15px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+    transition:.25s;
+}
+
+.summary-card:hover{
+    transform:translateY(-2px);
+}
+
+.card-info span{
+    font-size:13px;
+    color:#7d7d7d;
+}
+
+.card-info h3{
+    font-size:22px;
+    font-weight:600;
+    margin:4px 0;
+}
+
+.card-info small{
+    font-size:12px;
+    color:#9ca3af;
+}
+
+.card-icon{
+    width:50px;
+    height:50px;
+    border-radius:14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+}
+
+.income-card .card-icon{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.expense-card .card-icon{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.saving-card .card-icon{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.budget-card .card-icon{
+    background:#fef3c7;
+    color:#d97706;
+}
+/* ===========================
+CHARTS
+=========================== */
+
+.chart-card{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+    overflow:hidden;
+}
+
+.chart-header{
+    padding:16px 20px;
+    border-bottom:1px solid #f1f1f1;
+}
+
+.chart-header h5{
+    margin:0;
+    font-size:17px;
+    font-weight:600;
+    color:#1f2937;
+}
+
+.chart-body{
+    position:relative;
+    height:340px;
+    padding:20px;
+}
+
+.chart-body canvas{
+    width:100% !important;
+    height:100% !important;
+}
+/* ===========================
+TABLE
+=========================== */
+
+.table-card{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+    overflow:hidden;
+}
+
+.table-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 22px;
+    border-bottom:1px solid #f3f3f3;
+}
+
+.table-header h5{
+    margin:0;
+    font-size:17px;
+    font-weight:600;
+}
+
+.table{
+    margin:0;
+}
+
+.table thead{
+    background:#fafbfc;
+}
+
+.table thead th{
+    font-size:13px;
+    color:#6b7280;
+    font-weight:600;
+    padding:14px 18px;
+    border:none;
+}
+
+.table tbody td{
+    font-size:13px;
+    padding:15px 18px;
+    vertical-align:middle;
+    border-top:1px solid #f4f4f4;
+}
+
+.table tbody tr:hover{
+    background:#fafcff;
+}
+
+.badge{
+    border-radius:20px;
+    padding:6px 12px;
+    font-size:12px;
+    font-weight:500;
+}
+
+/* ===========================
+BUTTONS
+=========================== */
+
+.btn-primary{
+    background:#2563eb;
+    border:none;
+    border-radius:10px;
+    padding:9px 16px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
+
+/* ===========================
+USER INFO
+=========================== */
+
+.user-info{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#2563eb;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    font-weight:600;
+}
+
+.user-info h6{
+    margin:0;
+    font-size:14px;
+    font-weight:600;
+}
+
+.user-info small{
+    color:#888;
+    font-size:12px;
+}
+
+/* ===========================
+RESPONSIVE
+=========================== */
+
+@media(max-width:992px){
+
+.sidebar{
+    width:80px;
+    padding:18px 10px;
+}
+
+.logo span,
+.menu span,
+.logout span,
+.overview-card{
+    display:none;
+}
+
+.main{
+    margin-left:80px;
+}
+
+.topbar{
+    padding:0 16px;
+}
+
+.summary-card{
+    height:auto;
+}
+
+.chart-body{
+    height:380px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.chart-body canvas{
+    width:320px !important;
+    height:320px !important;
+    max-width:320px;
+    max-height:320px;
+}
+
+}
+/* Portfolio Tabs */
+
+.portfolio-tabs{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    border-bottom:2px solid #ececec;
+    margin-bottom:25px;
+}
+
+.portfolio-tabs button{
+
+    background:none;
+    border:none;
+    padding:14px 5px;
+
+    font-size:15px;
+    font-weight:600;
+
+    color:#6b7280;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.portfolio-tabs button:hover{
+
+    color:#2563eb;
+
+}
+
+.portfolio-tabs button.active{
+
+    color:#2563eb;
+
+    border-bottom:3px solid #2563eb;
+}
+
+/* Asset Allocation Chart */
+.allocation-body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:340px;
+}
+
+.allocation-body canvas{
+    width:260px !important;
+    height:260px !important;
+}
+
+.menu a{
+    position: relative;
+}
+
+.menu .badge{
+    font-size:10px;
+    padding:3px 7px;
+    border-radius:20px;
+}

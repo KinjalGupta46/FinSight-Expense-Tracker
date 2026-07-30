@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Alerts{% endblock %}
+
+{% block page_title %}Financial Alerts{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+
+    <h2 class="page-title">Financial Alerts</h2>
+
+    <p class="page-subtitle">
+
+        Smart alerts generated from your financial activity.
+
+    </p>
+
+</div>
+
+{% if alerts %}
+
+    {% for alert in alerts %}
+
+    <div class="alert alert-{{ alert.type }} mb-4">
+
+        <h5>{{ alert.title }}</h5>
+
+        <p class="mb-0">{{ alert.message }}</p>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+<div class="alert alert-success">
+
+    <h5>No Alerts</h5>
+
+    <p class="mb-0">
+
+        Your financial activity looks healthy.
+
+    </p>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

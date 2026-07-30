@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% block title %}Reports{% endblock %}
+{% block page_title %}Financial Reports{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="page-title">Financial Reports</h2>
+            <p class="page-subtitle">
+                Analyze your expenses and financial summary.
+            </p>
+        </div>
+
+       <div class="d-flex gap-2">
+
+    <a href="/export-expenses" class="btn btn-success">
+        Export CSV
+    </a>
+
+    <a href="/export-pdf" class="btn btn-danger">
+        Export PDF
+    </a>
+
+</div>
+    </div>
+
+    <!-- Filter -->
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <form method="GET" action="/reports">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label class="form-label">From Date</label>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="from_date"
+                            value="{{ request.args.get('from_date','') }}">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">To Date</label>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="to_date"
+                            value="{{ request.args.get('to_date','') }}">
+                    </div>
+
+                    <div class="col-md-4 d-flex align-items-end gap-2">
+
+                        <button class="btn btn-primary w-100">
+                            <i class="bi bi-funnel-fill me-2"></i>
+                            Apply
+                        </button>
+
+                        <a href="/reports" class="btn btn-outline-secondary w-100">
+                            Reset
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+            <div class="summary-card income-card">
+                <div class="card-info">
+                    <span>Total Expenses</span>
+                    <h3>{{ total_expenses }}</h3>
+                    <small>Total Records</small>
+                </div>
+
+                <div class="card-icon">
+                    <i class="bi bi-receipt"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="summary-card expense-card">
+                <div class="card-info">
+                    <span>Total Amount</span>
+                    <h3>₹{{ "{:,.0f}".format(total_amount) }}</h3>
+                    <small>Total Spent</small>
+                </div>
+
+                <div class="card-icon">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="summary-card saving-card">
+                <div class="card-info">
+                    <span>Average Expense</span>
+                    <h3>₹{{ "{:,.0f}".format(average) }}</h3>
+                    <small>Per Transaction</small>
+                </div>
+
+                <div class="card-icon">
+                    <i class="bi bi-bar-chart"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="summary-card budget-card">
+                <div class="card-info">
+                    <span>Highest Expense</span>
+                    <h3>₹{{ "{:,.0f}".format(highest) }}</h3>
+                    <small>Maximum</small>
+                </div>
+
+                <div class="card-icon">
+                    <i class="bi bi-graph-up-arrow"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm border-0 mt-4">
+
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Expense Trend</h5>
+    </div>
+
+    <div class="card-body">
+        <canvas id="expenseChart" height="100"></canvas>
+    </div>
+
+</div>
+
+    <div class="card shadow-sm border-0 mt-4">
+
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Expense by Category</h5>
+    </div>
+
+    <div class="card-body">
+        <canvas id="categoryChart" height="120"></canvas>
+    </div>
+
+</div>
+
+    <div class="row mt-4">
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Highest Category</h6>
+                <h4>{{ category_labels[0] if category_labels else "-" }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Categories</h6>
+                <h4>{{ category_labels|length }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Average Expense</h6>
+                <h4>₹{{ "{:,.0f}".format(average) }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Financial Health</h6>
+                <h4 class="text-success">Good</h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <!-- Expense Report -->
+
+    <div class="table-card mt-4">
+
+        <div class="table-header d-flex justify-content-between align-items-center">
+            <h5>Expense Report</h5>
+
+            <span class="badge bg-primary">
+                {{ total_expenses }} Records
+            </span>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table align-middle">
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Payment</th>
+                        <th>Description</th>
+                        <th class="text-end">Amount</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% if reports %}
+
+                        {% for row in reports %}
+
+                        <tr>
+
+                            <td>{{ row[0] }}</td>
+
+                            <td>
+                                <span class="badge bg-primary">
+                                    {{ row[1] }}
+                                </span>
+                            </td>
+
+                            <td>{{ row[2] }}</td>
+
+                            <td>{{ row[3] }}</td>
+
+                            <td class="text-end fw-bold text-danger">
+                                ₹{{ "{:,.0f}".format(row[4]) }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="5" class="text-center py-5">
+
+                                <i class="bi bi-bar-chart display-5 text-muted"></i>
+
+                                <h5 class="mt-3 text-muted">
+                                    No Report Available
+                                </h5>
+
+                                <p class="text-muted">
+                                    Add some expenses to generate reports.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+const chartLabels = {{ chart_labels|tojson }};
+const chartValues = {{ chart_values|tojson }};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const chartLabels = {{ chart_labels|tojson }};
+const chartValues = {{ chart_values|tojson }};
+
+const categoryLabels = {{ category_labels|tojson }};
+const categoryValues = {{ category_values|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+
+{% endblock %}

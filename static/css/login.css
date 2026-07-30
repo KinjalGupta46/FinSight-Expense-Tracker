@@ -1,0 +1,803 @@
+/* ===========================
+   GOOGLE FONT
+=========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:linear-gradient(-45deg,#2563eb,#3b82f6,#60a5fa,#93c5fd);
+
+    background-size:400% 400%;
+
+    animation:gradientBG 12s ease infinite;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+@keyframes gradientBG{
+
+    0%{background-position:0% 50%;}
+
+    50%{background-position:100% 50%;}
+
+    100%{background-position:0% 50%;}
+
+}
+
+/* Floating Glass Circles */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:260px;
+
+    height:260px;
+
+    top:-100px;
+
+    left:-70px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.14);
+
+    filter:blur(8px);
+
+    z-index:0;
+
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:220px;
+
+    height:220px;
+
+    right:-60px;
+
+    bottom:-70px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.10);
+
+    filter:blur(8px);
+
+    z-index:0;
+
+}
+
+/* ===========================
+CONTAINER
+=========================== */
+
+.login-container{
+
+    display:flex;
+
+    min-height:100vh;
+
+    width:100%;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+/* ===========================
+LEFT PANEL
+=========================== */
+
+.left-panel{
+
+    width:50%;
+
+    color:#fff;
+
+    padding:40px 50px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:28px;
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.brand i{
+
+    font-size:26px;
+
+}
+
+.hero h1{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    line-height:1.2;
+
+    margin-bottom:14px;
+
+}
+
+.hero span{
+
+    color:#dbeafe;
+
+}
+
+.hero p{
+
+    width:90%;
+
+    font-size:14px;
+
+    line-height:22px;
+
+    opacity:.9;
+
+    margin-bottom:26px;
+
+}
+
+/* ===========================
+FEATURES
+=========================== */
+
+.features{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.feature{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:flex-start;
+
+    transition:.3s ease;
+
+}
+
+.feature:hover{
+
+    transform:translateX(6px);
+
+}
+
+.feature .icon{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:11px;
+
+    background:rgba(255,255,255,.18);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:16px;
+
+    flex-shrink:0;
+
+    transition:.3s ease;
+
+}
+
+.feature:hover .icon{
+
+    transform:rotate(10deg) scale(1.1);
+
+}
+
+.feature h5{
+
+    font-size:14px;
+
+    margin-bottom:2px;
+
+}
+
+.feature p{
+
+    margin:0;
+
+    font-size:12px;
+
+    line-height:18px;
+
+    opacity:.85;
+
+}
+
+.footer-text{
+
+    margin-top:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:12px;
+
+    opacity:.85;
+
+}
+
+/* ===========================
+RIGHT PANEL
+=========================== */
+
+.right-panel{
+
+    width:50%;
+
+    background:#f8fbff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:30px;
+
+}
+
+/* ===========================
+LOGIN CARD
+=========================== */
+
+.login-card{
+
+    width:360px;
+
+    background:rgba(255,255,255,.97);
+
+    border-radius:18px;
+
+    padding:30px;
+
+    border:1px solid rgba(255,255,255,.4);
+
+    backdrop-filter:blur(12px);
+
+    -webkit-backdrop-filter:blur(12px);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+
+    transition:.35s ease;
+
+    animation:fadeUp .7s ease;
+
+}
+
+.login-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 50px rgba(0,0,0,.18);
+
+}
+
+.login-logo{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:14px;
+
+}
+
+.circle{
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#fff;
+
+    font-size:24px;
+
+    transition:.3s;
+
+}
+
+.circle:hover{
+
+    transform:rotate(10deg) scale(1.08);
+
+}
+
+.login-card h2{
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#1f2937;
+
+    margin-bottom:6px;
+
+}
+
+.login-card p{
+
+    text-align:center;
+
+    font-size:13px;
+
+    color:#6b7280;
+
+    margin-bottom:20px;
+
+}
+
+/* ===========================
+INPUT FIELDS
+=========================== */
+
+.login-card label{
+
+    display:block;
+
+    font-size:13px;
+
+    font-weight:500;
+
+    color:#374151;
+
+    margin-bottom:6px;
+
+}
+
+.input-box{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    margin-bottom:14px;
+
+}
+
+.input-box i:first-child{
+
+    position:absolute;
+
+    left:14px;
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+    z-index:2;
+
+}
+
+.input-box input{
+
+    width:100%;
+
+    height:42px;
+
+    border:1px solid #dbe4f0;
+
+    border-radius:10px;
+
+    background:#fafcff;
+
+    padding-left:40px;
+
+    padding-right:40px;
+
+    font-size:13px;
+
+    transition:.3s;
+
+    outline:none;
+
+}
+
+.input-box input:hover{
+
+    border-color:#60a5fa;
+
+}
+
+.input-box input:focus{
+
+    border-color:#2563eb;
+
+    background:#fff;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.12);
+
+    transform:scale(1.01);
+
+}
+
+.eye-btn{
+
+    position:absolute;
+
+    right:12px;
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+}
+
+.eye-btn:hover{
+
+    color:#2563eb;
+
+}
+
+/* ===========================
+LINKS
+=========================== */
+
+.text-end{
+
+    margin-bottom:16px !important;
+
+}
+
+.text-end a{
+
+    text-decoration:none;
+
+    color:#2563eb;
+
+    font-size:12px;
+
+    font-weight:500;
+
+}
+
+.text-end a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ===========================
+BUTTON
+=========================== */
+
+.login-btn{
+
+    width:100%;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:#fff;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.login-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-120%;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(255,255,255,.28);
+
+    transform:skewX(-25deg);
+
+    transition:.7s;
+
+}
+
+.login-btn:hover::before{
+
+    left:130%;
+
+}
+
+.login-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 24px rgba(37,99,235,.35);
+
+}
+
+/* ===========================
+DIVIDER
+=========================== */
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    margin:18px 0;
+
+}
+
+.divider::before,
+.divider::after{
+
+    content:"";
+
+    flex:1;
+
+    height:1px;
+
+    background:#e5e7eb;
+
+}
+
+.divider span{
+
+    margin:0 12px;
+
+    color:#9ca3af;
+
+    font-size:12px;
+
+}
+
+/* ===========================
+REGISTER LINK
+=========================== */
+
+.register-text{
+
+    text-align:center;
+
+    font-size:13px;
+
+    color:#6b7280;
+
+}
+
+.register-text a{
+
+    color:#2563eb;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+}
+
+.register-text a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ===========================
+ANIMATIONS
+=========================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================
+RESPONSIVE
+=========================== */
+
+@media(max-width:1100px){
+
+.left-panel{
+
+    padding:35px;
+
+}
+
+.hero h1{
+
+    font-size:28px;
+
+}
+
+.hero p{
+
+    width:100%;
+
+}
+
+.login-card{
+
+    width:340px;
+
+    padding:26px;
+
+}
+
+}
+
+@media(max-width:992px){
+
+.login-container{
+
+    flex-direction:column;
+
+}
+
+.left-panel{
+
+    display:none;
+
+}
+
+.right-panel{
+
+    width:100%;
+
+    min-height:100vh;
+
+    padding:24px;
+
+}
+
+.login-card{
+
+    width:100%;
+
+    max-width:380px;
+
+}
+
+body{
+
+    overflow:auto;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.login-card{
+
+    padding:22px;
+
+}
+
+.login-card h2{
+
+    font-size:20px;
+
+}
+
+.circle{
+
+    width:50px;
+
+    height:50px;
+
+    font-size:22px;
+
+}
+
+.login-btn{
+
+    height:44px;
+
+}
+
+}

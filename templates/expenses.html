@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses{% endblock %}
+{% block page_title %}Expense Management{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Statistics -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+           <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body">
+
+                   <p class="text-muted mb-1">Total Expenses</p>
+<h3 class="fw-bold text-primary">{{ stats[0] }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">Total Amount</p>
+<h3 class="fw-bold text-danger">₹{{ stats[1] }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+           <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body">
+
+                  <p class="text-muted mb-1">Highest Expense</p>
+<h3 class="fw-bold text-success">₹{{ stats[2] }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Search -->
+
+   <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body">
+
+           <form method="GET" class="row g-3 mb-4">
+
+    <div class="col-md-4">
+        <input
+            type="text"
+            class="form-control"
+            name="search"
+            value="{{ request.args.get('search','') }}"
+            placeholder="Search Description">
+    </div>
+
+    <div class="col-md-3">
+        <select class="form-select" name="category">
+
+            <option value="">All Categories</option>
+
+            <option value="Food">Food</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Education">Education</option>
+            <option value="Travel">Travel</option>
+            <option value="Investment">Investment</option>
+            <option value="Others">Others</option>
+
+        </select>
+    </div>
+
+   <div class="col-md-2">
+    <input
+        type="date"
+        class="form-control"
+        name="date"
+        value="{{ request.args.get('date','') }}">
+</div>
+
+<div class="col-md-2">
+
+    <select
+        class="form-select"
+        name="sort">
+
+        <option value="new">Newest</option>
+        <option value="old">Oldest</option>
+        <option value="high">Highest Amount</option>
+        <option value="low">Lowest Amount</option>
+
+    </select>
+
+</div>
+
+<div class="col-md-2">
+
+    <button class="btn btn-primary w-100">
+
+        Search
+
+    </button>
+
+</div>
+
+</form>
+        </div>
+
+    </div>
+
+    <!-- Export -->
+
+    <div class="mb-3">
+
+        <a
+            href="/export-expenses"
+            class="btn btn-success">
+
+            Export CSV
+
+        </a>
+
+    </div>
+
+    <!-- Add Expense -->
+
+    <div class="card shadow border-0 mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4>Add Expense</h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="amount"
+                            placeholder="Amount"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <select
+                            class="form-select"
+                            name="category"
+                            required>
+
+                            <option>Food</option>
+                            <option>Transportation</option>
+                            <option>Shopping</option>
+                            <option>Utilities</option>
+                            <option>Healthcare</option>
+                            <option>Entertainment</option>
+                            <option>Education</option>
+                            <option>Travel</option>
+                            <option>Investment</option>
+                            <option>Others</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <select
+                            class="form-select"
+                            name="payment_mode"
+                            required>
+
+                            <option>Cash</option>
+                            <option>UPI</option>
+                            <option>Credit Card</option>
+                            <option>Debit Card</option>
+                            <option>Net Banking</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <textarea
+                    class="form-control"
+                    rows="3"
+                    name="description"
+                    placeholder="Description"></textarea>
+
+                <br>
+
+                <input
+                    type="date"
+                    class="form-control"
+                    name="expense_date"
+                    required>
+
+                <br>
+
+                <button
+                    class="btn btn-primary">
+
+                    Add Expense
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Expense Table -->
+
+    <div class="card shadow border-0">
+
+       <div class="card-header bg-white border-0 pt-4 d-flex justify-content-between align-items-center">
+
+            <h5 class="fw-bold mb-0">
+Expense History
+</h5>
+
+<a href="/export-expenses" class="btn btn-success btn-sm">
+<i class="bi bi-download"></i> Export
+</a>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Payment</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+               <tbody>
+
+{% if expenses %}
+
+{% for expense in expenses %}
+
+                    <tr>
+
+                        <td>{{ expense[5] }}</td>
+
+                        <td>{{ expense[2] }}</td>
+
+                        <td>{{ expense[3] }}</td>
+
+                        <td>{{ expense[4] }}</td>
+
+                        <td class="text-danger">
+
+                            ₹{{ expense[1] }}
+
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="/edit-expense/{{ expense[0] }}"
+                                class="btn btn-warning btn-sm">
+
+                                Edit
+
+                            </a>
+
+                            <a
+                                href="/delete-expense/{{ expense[0] }}"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('Delete this expense?')">
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                   {% endfor %}
+
+{% else %}
+
+<tr>
+
+<td colspan="6" class="text-center">
+
+No Expenses Found
+
+</td>
+
+</tr>
+
+{% endif %}
+
+</tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

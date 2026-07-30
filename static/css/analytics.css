@@ -1,0 +1,46 @@
+body{
+    background:#f5f7fb;
+}
+
+.sidebar{
+    min-height:100vh;
+    background:#fff;
+    border-right:1px solid #ddd;
+}
+
+.logo{
+    color:#2563eb;
+    margin:25px;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:0;
+}
+
+.sidebar li{
+    padding:12px 20px;
+}
+
+.sidebar li.active{
+    background:#2563eb;
+}
+
+.sidebar li.active a{
+    color:white;
+}
+
+.sidebar a{
+    text-decoration:none;
+    color:#444;
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+}
+
+.card-header{
+    background:white;
+    font-weight:600;
+}

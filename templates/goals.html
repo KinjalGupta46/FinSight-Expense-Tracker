@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Financial Goals{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>Financial Goals</h2>
+
+        <a href="/add-goal" class="btn btn-primary">
+            + Add Goal
+        </a>
+
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Total Goals</h6>
+                    <h3>{{ total_goals }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Completed Goals</h6>
+                    <h3>{{ completed_goals }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Total Target</h6>
+                    <h3>₹{{ "%.2f"|format(total_target) }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Total Saved</h6>
+                    <h3>₹{{ "%.2f"|format(total_saved) }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Goals Table -->
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Goal</th>
+                        <th>Target Amount</th>
+                        <th>Saved Amount</th>
+                        <th>Progress</th>
+                        <th>Remaining</th>
+                        <th>Deadline</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for goal in goals %}
+
+                {% set progress = (goal[3] / goal[2]) * 100 %}
+
+                {% if progress > 100 %}
+                    {% set progress = 100 %}
+                {% endif %}
+
+                {% set remaining = goal[2] - goal[3] %}
+
+                {% if remaining < 0 %}
+                    {% set remaining = 0 %}
+                {% endif %}
+
+                <tr>
+
+                    <td>{{ goal[1] }}</td>
+
+                    <td>₹{{ "%.2f"|format(goal[2]) }}</td>
+
+                    <td>₹{{ "%.2f"|format(goal[3]) }}</td>
+
+                    <td width="220">
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar bg-success"
+                                role="progressbar"
+                                style="width: {{ progress }}%;">
+
+                                {{ "%.1f"|format(progress) }}%
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <td>
+                        ₹{{ "%.2f"|format(remaining) }}
+                    </td>
+
+                    <td>{{ goal[4] }}</td>
+
+                    <td>
+
+                        <a href="/edit-goal/{{ goal[0] }}"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a href="/delete-goal/{{ goal[0] }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this goal?')">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                {% if goals|length == 0 %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">
+                        No Financial Goals Found.
+                    </td>
+                </tr>
+                {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

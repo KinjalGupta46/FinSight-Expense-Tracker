@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% block title %}Budget{% endblock %}
+{% block page_title %}Budget Planner{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<!-- Header -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="page-title">
+
+            Budget Planner
+
+        </h2>
+
+        <p class="page-subtitle">
+
+            Manage your monthly budget and monitor your spending.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Summary Cards -->
+
+<div class="row g-4 mb-4">
+
+    <!-- Budget -->
+
+    <div class="col-lg-3">
+
+        <div class="summary-card income-card">
+
+            <div class="card-info">
+
+                <span>Monthly Budget</span>
+
+                <h3>₹{{ "{:,.0f}".format(budget) }}</h3>
+
+                <small>Current Budget</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-wallet2"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Expense -->
+
+    <div class="col-lg-3">
+
+        <div class="summary-card expense-card">
+
+            <div class="card-info">
+
+                <span>Total Expense</span>
+
+                <h3>₹{{ "{:,.0f}".format(expense) }}</h3>
+
+                <small>Spent This Month</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-credit-card"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Remaining -->
+
+    <div class="col-lg-3">
+
+        <div class="summary-card saving-card">
+
+            <div class="card-info">
+
+                <span>Remaining</span>
+
+                <h3>₹{{ "{:,.0f}".format(remaining) }}</h3>
+
+                <small>Available Budget</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-piggy-bank"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Status -->
+
+    <div class="col-lg-3">
+
+        <div class="summary-card budget-card">
+
+            <div class="card-info">
+
+                <span>Status</span>
+
+                <h3>{{ status }}</h3>
+
+                <small>{{ used }}% Used</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-bar-chart-fill"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= Budget Form ================= -->
+
+<div class="row g-4">
+
+    <div class="col-lg-5">
+
+        <div class="table-card">
+
+            <div class="table-header">
+
+                <h5>
+
+                    <i class="bi bi-wallet2 me-2"></i>
+
+                    Monthly Budget
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST">
+
+                    <label class="form-label">
+
+                        Budget Amount
+
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control mb-4"
+                        name="budget"
+                        step="0.01"
+                        value="{{ budget }}"
+                        placeholder="Enter Monthly Budget"
+                        required>
+
+                    <button class="btn btn-primary w-100">
+
+                        <i class="bi bi-check-circle me-2"></i>
+
+                        Save Budget
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Budget Progress -->
+
+    <div class="col-lg-7">
+
+        <div class="table-card">
+
+            <div class="table-header">
+
+                <h5>
+
+                    <i class="bi bi-graph-up-arrow me-2"></i>
+
+                    Budget Utilization
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between mb-2">
+
+                    <strong>{{ used }}%</strong>
+
+                    <span class="text-muted">
+
+                        {{ status }}
+
+                    </span>
+
+                </div>
+
+                <div class="progress mb-4"
+                     style="height:18px;border-radius:15px;">
+
+                    <div
+                        class="progress-bar
+                        {% if used < 70 %}
+                            bg-success
+                        {% elif used < 100 %}
+                            bg-warning
+                        {% else %}
+                            bg-danger
+                        {% endif %}"
+                        role="progressbar"
+                        style="width:{{ used }}%;">
+
+                    </div>
+
+                </div>
+
+                <div class="row text-center">
+
+                    <div class="col-4">
+
+                        <h5 class="text-primary">
+
+                            ₹{{ "{:,.0f}".format(budget) }}
+
+                        </h5>
+
+                        <small class="text-muted">
+
+                            Budget
+
+                        </small>
+
+                    </div>
+
+                    <div class="col-4">
+
+                        <h5 class="text-danger">
+
+                            ₹{{ "{:,.0f}".format(expense) }}
+
+                        </h5>
+
+                        <small class="text-muted">
+
+                            Spent
+
+                        </small>
+
+                    </div>
+
+                    <div class="col-4">
+
+                        <h5 class="text-success">
+
+                            ₹{{ "{:,.0f}".format(remaining) }}
+
+                        </h5>
+
+                        <small class="text-muted">
+
+                            Left
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

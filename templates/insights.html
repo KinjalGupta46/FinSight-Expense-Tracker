@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}Insights{% endblock %}
+
+{% block page_title %}AI Financial Insights{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+
+    <h2 class="page-title">Financial Insights</h2>
+
+    <p class="page-subtitle">
+        AI-powered analysis of your spending habits.
+    </p>
+
+</div>
+
+<div class="row g-4 mb-4">
+
+    <div class="col-lg-3">
+
+        <div class="summary-card income-card">
+
+            <div class="card-info">
+
+                <span>Income</span>
+
+                <h3>₹{{ "{:,.0f}".format(income) }}</h3>
+
+                <small>Monthly</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-cash-stack"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3">
+
+        <div class="summary-card expense-card">
+
+            <div class="card-info">
+
+                <span>Expense</span>
+
+                <h3>₹{{ "{:,.0f}".format(expense) }}</h3>
+
+                <small>Total</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-wallet2"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3">
+
+        <div class="summary-card saving-card">
+
+            <div class="card-info">
+
+                <span>Savings</span>
+
+                <h3>₹{{ "{:,.0f}".format(savings) }}</h3>
+
+                <small>Available</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-piggy-bank"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3">
+
+        <div class="summary-card budget-card">
+
+            <div class="card-info">
+
+                <span>Top Category</span>
+
+                <h3>{{ highest }}</h3>
+
+                <small>₹{{ "{:,.0f}".format(highest_amount) }}</small>
+
+            </div>
+
+            <div class="card-icon">
+
+                <i class="bi bi-star-fill"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="table-card mb-4">
+
+    <div class="table-header">
+
+        <h5>Expense Category Analysis</h5>
+
+    </div>
+
+    <table class="table">
+
+        <thead>
+
+            <tr>
+
+                <th>Category</th>
+
+                <th>Total Expense</th>
+
+                <th>Suggestion</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for category, amount in categories %}
+
+            <tr>
+
+                <td>{{ category }}</td>
+
+                <td>₹{{ "{:,.0f}".format(amount) }}</td>
+
+                <td>
+
+                    {% if amount > income*0.30 %}
+
+                        Reduce spending in this category.
+
+                    {% elif amount > income*0.15 %}
+
+                        Monitor your spending.
+
+                    {% else %}
+
+                        Good financial control.
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="table-card">
+
+    <div class="table-header">
+
+        <h5>AI Suggestions</h5>
+
+    </div>
+
+    <div class="p-4">
+
+        {% if savings >= income*0.30 %}
+
+        <div class="alert alert-success">
+
+            <i class="bi bi-check-circle-fill me-2"></i>
+
+            Excellent! You are saving more than 30% of your income.
+
+        </div>
+
+        {% elif savings >= income*0.20 %}
+
+        <div class="alert alert-primary">
+
+            <i class="bi bi-lightbulb-fill me-2"></i>
+
+            Good savings rate. Keep maintaining your budget.
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-warning">
+
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+            Increase your monthly savings. Try reducing unnecessary expenses.
+
+        </div>
+
+        {% endif %}
+
+        <div class="alert alert-info">
+
+            <i class="bi bi-stars me-2"></i>
+
+            Your highest spending category is <strong>{{ highest }}</strong>.
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
