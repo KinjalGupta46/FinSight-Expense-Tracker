@@ -19,6 +19,7 @@ from reportlab.platypus import (
     Paragraph,
     PageBreak
 )
+
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 from flask import send_file
@@ -48,7 +49,6 @@ app.permanent_session_lifetime = timedelta(minutes=30)
 app.config.from_object(Config)
 
 mysql.init_app(app)
-
 
 # ---------------- BLUEPRINTS ---------------- #
 
